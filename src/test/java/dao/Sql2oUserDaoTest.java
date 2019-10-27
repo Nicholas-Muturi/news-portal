@@ -19,12 +19,26 @@ public class Sql2oUserDaoTest {
         userDao.add(user);
         return user;
     }
+    private User newUser2(){
+        User user = new User("John Cena","Wrestler","Invisible","Wwe");
+        userDao.add(user);
+        return user;
+    }
 
     @Test
     public void userSavedToDatabase(){
         User user = newUser();
         assertNotEquals(0,user.getId());
     }
+
+    @Test
+    public void findingParticularUser(){
+        User user = newUser();
+        User user2 = newUser2();
+        User foundUser = userDao.findById(user.getId());
+        assertTrue(user.equals(foundUser));
+    }
+
 
 
 
