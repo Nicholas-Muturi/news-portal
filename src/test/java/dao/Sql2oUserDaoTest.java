@@ -8,6 +8,7 @@ import org.sql2o.Sql2o;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class Sql2oUserDaoTest {
     private static Sql2oUserDao userDao = new Sql2oUserDao();
 
@@ -38,6 +39,34 @@ public class Sql2oUserDaoTest {
         User foundUser = userDao.findById(user.getId());
         assertTrue(user.equals(foundUser));
     }
+
+    @Test
+    public void getAllUsers(){
+        User user = newUser();
+        User user2 = newUser2();
+        assertTrue(userDao.allUsers().contains(user));
+        assertTrue(userDao.allUsers().contains(user2));
+    }
+
+    @Test
+    public void deleteUserFromDatabase_int(){
+        User user = newUser();
+        User user2 = newUser2();
+        userDao.deleteById(user.getId());
+        assertEquals(1, userDao.allUsers().size());
+    }
+
+    @Test
+    public void deleteAllUsers(){
+        User user = newUser();
+        User user2 = newUser2();
+        userDao.deleteAll();
+        assertEquals(0, userDao.allUsers().size());
+    }
+
+
+
+
 
 
 
