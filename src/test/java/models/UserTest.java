@@ -12,7 +12,7 @@ public class UserTest {
     public DatabaseRule databaseRule = new DatabaseRule();
 
     private User newUser(){
-        return new User("Kanye West","Manager","Artist","Def Jam");
+        return new User("Kanye West","Manager","Artist");
     }
 
     @Test

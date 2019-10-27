@@ -1,6 +1,7 @@
 package dao;
 
 import models.Department;
+import models.User;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -8,6 +9,7 @@ import static org.junit.Assert.*;
 
 public class Sql2oDeptDaoTest {
     private Sql2oDeptDao deptDao = new Sql2oDeptDao();
+    private static Sql2oUserDao userDao = new Sql2oUserDao();
 
     @Rule
     public DatabaseRule databaseRule = new DatabaseRule();
@@ -18,6 +20,24 @@ public class Sql2oDeptDaoTest {
         return department;
     }
 
+    private Department newDept2(){
+        Department department = new Department("Wrestlers","No comment");
+        deptDao.add(department);
+        return department;
+    }
+
+    private User newUser(){
+        User user = new User("Kanye West","Manager","Artist");
+        userDao.add(user);
+        return user;
+    }
+
+    private User newUser2(){
+        User user = new User("John Cena","Wrestler","Invisible");
+        userDao.add(user);
+        return user;
+    }
+
     @Test
     public void departmentAddedToDatabase(){
         Department department = newDept();
@@ -25,7 +45,36 @@ public class Sql2oDeptDaoTest {
         assertNotEquals(0,department.getId());
     }
 
+    @Test
+    public void getDepartmentUsingId(){
+        Department department = newDept();
+        Department department2 = newDept2();
+        assertTrue(deptDao.allDepartments().contains(department));
+        assertTrue(deptDao.allDepartments().contains(department2));
+    }
 
+    @Test
+    public void addUserToDepartment(){
+        Department department = newDept();
+        User user = newUser();
+        deptDao.addUserToDept(department,user);
+        assertEquals("Producers",user.getDepartment());
+    }
 
+    @Test
+    public void deletingAllDepartments(){
+        Department department = newDept();
+        Department department2= newDept2();
+        deptDao.deleteAll();
+        assertEquals(0,deptDao.allDepartments().size());
+    }
+
+    @Test
+    public void deletingDepartmentById(){
+        Department department = newDept();
+        Department department2= newDept2();
+        deptDao.deleteDepartmentById(department.getId());
+        assertEquals(1,deptDao.allDepartments().size());
+    }
 
 }

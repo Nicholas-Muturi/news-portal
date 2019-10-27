@@ -9,6 +9,7 @@ import java.util.List;
 public interface DeptDao {
     //create
     void add(Department department);
+    void addUserToDept(Department department,User user);
 
     //read
     Department findById(int id);

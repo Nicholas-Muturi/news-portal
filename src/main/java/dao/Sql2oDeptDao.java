@@ -28,6 +28,21 @@ public class Sql2oDeptDao implements DeptDao {
     }
 
     @Override
+    public void addUserToDept(Department department,User user) {
+        String sql = "INSERT INTO departments_users(deptid,userid) values (:deptid,:userid);";
+        try (Connection con = DB.sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("deptid",department.getId())
+                    .addParameter("userid",user.getId())
+                    .executeUpdate();
+            user.setDepartment(department.getName());
+        } catch (Sql2oException ex){
+            System.out.println("Couldn't insert user into department: "+ex);
+        }
+    }
+
+
+    @Override
     public Department findById(int id) {
         String sql = "SELECT * from departments WHERE id=:id;";
         try (Connection con = DB.sql2o.open()) {

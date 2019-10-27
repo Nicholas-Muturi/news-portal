@@ -17,6 +17,7 @@ public class Sql2oUserDao implements UserDao {
         try (Connection con = DB.sql2o.open()) {
             int id = (int) con.createQuery(sql,true)
                     .bind(user)
+                    .addParameter("department",user.getDepartment())
                     .executeUpdate()
                     .getKey();
             user.setId(id);
@@ -24,6 +25,8 @@ public class Sql2oUserDao implements UserDao {
             System.out.println("User not added: "+ex);
         }
     }
+
+
 
     @Override
     public User findById(int id) {
