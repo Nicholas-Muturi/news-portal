@@ -13,7 +13,7 @@ public interface DeptDao {
     //read
     Department findById(int id);
     List<Department> allDepartments();
-    List<User> allDepartmentEmployees();
+    List<User> allDepartmentEmployees(int deptId);
     List<News> allDepartmentNews();
 
     //update
@@ -21,7 +21,7 @@ public interface DeptDao {
 
     //delete
     void deleteDepartmentById(int id);
-    void deleteEmployeeById(int id);
-    void deleteNewsById(int id);
+    void deleteEmployeeById(int deptId, int userId);
+    void deleteDeptNewsById(int deptId, int newsId);
     void deleteAll();
 }

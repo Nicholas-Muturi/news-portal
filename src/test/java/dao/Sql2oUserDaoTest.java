@@ -66,10 +66,4 @@ public class Sql2oUserDaoTest {
 
 
 
-
-
-
-
-
-
 }
