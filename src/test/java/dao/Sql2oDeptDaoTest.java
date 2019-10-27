@@ -62,6 +62,17 @@ public class Sql2oDeptDaoTest {
     }
 
     @Test
+    public void getUsersInADepartment(){
+        Department department = newDept();
+        User user = newUser();
+        User user2 = newUser2();
+        deptDao.addUserToDept(department,user);
+        deptDao.addUserToDept(department,user2);
+        int posOneId = deptDao.allDepartmentEmployees(department.getId()).get(0).getId();
+        assertEquals(user.getId(),posOneId);
+    }
+
+    @Test
     public void deletingEmployeeById(){
         Department department = newDept();
         User user = newUser();

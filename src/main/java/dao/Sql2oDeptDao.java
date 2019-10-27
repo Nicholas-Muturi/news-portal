@@ -70,6 +70,7 @@ public class Sql2oDeptDao implements DeptDao {
         String joinQuery = "SELECT userid FROM departments_users WHERE deptid = :deptid";
         try (Connection con = DB.sql2o.open()) {
             List<Integer> userIds = con.createQuery(joinQuery)
+                    .addParameter("deptid",deptId)
                     .executeAndFetch(Integer.class);
 
             for(int uId:userIds){
