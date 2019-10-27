@@ -41,6 +41,7 @@ out/
 out
 .gradle
 gradlew.bat
+!gradle-wrapper.jar
 settings.gradle
 models.Credentials.java
 src/main/java/models/Credentials.java
