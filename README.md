@@ -60,8 +60,5 @@ _**OpenJDK Runtime Environment (build 10.0.2+13-Ubuntu-1ubuntu0.18.04.4)**_
 + Compile the code by running: `gradle compileJava`
 + Navigate to the App class file located at build/classes/java/main and run: `java App`.
 
-## Live Link
-Not available at the moment.
-
 ## License
 This projects has a MIT License [found here](LICENSE)
