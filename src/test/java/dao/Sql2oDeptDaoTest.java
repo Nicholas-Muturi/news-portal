@@ -62,6 +62,19 @@ public class Sql2oDeptDaoTest {
     }
 
     @Test
+    public void deletingEmployeeById(){
+        Department department = newDept();
+        User user = newUser();
+        User user2 = newUser2();
+        deptDao.addUserToDept(department,user);
+        deptDao.addUserToDept(department,user2);
+
+        deptDao.deleteEmployeeFromDept(department,user);
+        assertEquals(1,department.getTotalEmployees());
+        assertEquals("None",user.getDepartment());
+    }
+
+    @Test
     public void deletingAllDepartments(){
         Department department = newDept();
         Department department2= newDept2();
@@ -76,5 +89,7 @@ public class Sql2oDeptDaoTest {
         deptDao.deleteDepartmentById(department.getId());
         assertEquals(1,deptDao.allDepartments().size());
     }
+
+
 
 }

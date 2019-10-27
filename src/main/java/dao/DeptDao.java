@@ -22,7 +22,7 @@ public interface DeptDao {
 
     //delete
     void deleteDepartmentById(int id);
-    void deleteEmployeeById(int deptId, int userId);
+    void deleteEmployeeFromDept(Department department,User user);
     void deleteDeptNewsById(int deptId, int newsId);
     void deleteAll();
 }

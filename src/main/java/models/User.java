@@ -13,7 +13,7 @@ public class User {
         this.name = name;
         this.position = position;
         this.role = role;
-        this.department = "Probation";
+        this.department = "None";
     }
 
     @Override
