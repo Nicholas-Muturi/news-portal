@@ -62,10 +62,11 @@ public class Department {
     }
 
     public void incrementTotalEmployees(){
-        this.totalEmployees++;
+        this.totalEmployees += 1;
+
     }
     public void decrementTotalEmployees(){
-        this.totalEmployees--;
+        this.totalEmployees -= 1;
     }
 
 }

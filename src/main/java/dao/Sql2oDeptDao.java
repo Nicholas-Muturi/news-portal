@@ -37,6 +37,7 @@ public class Sql2oDeptDao implements DeptDao {
                     .executeUpdate();
             user.setDepartment(department.getName());
             department.incrementTotalEmployees();
+            updateEmployeeCount(department);
         } catch (Sql2oException ex){
             System.out.println("Couldn't insert user into department: "+ex);
         }
@@ -131,6 +132,7 @@ public class Sql2oDeptDao implements DeptDao {
                     .executeUpdate();
             user.setDepartment("None");
             department.decrementTotalEmployees();
+            updateEmployeeCount(department);
         } catch (Sql2oException ex){
             System.out.println(ex);
         }
@@ -154,6 +156,19 @@ public class Sql2oDeptDao implements DeptDao {
         String sql = "DELETE from departments";
         try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void updateEmployeeCount(Department department) {
+        String sql = "UPDATE departments SET totalemployees = :totalemployees WHERE id = :id";
+        try (Connection con = DB.sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("totalemployees",department.getTotalEmployees())
+                    .addParameter("id",department.getId())
+                    .executeUpdate();
         } catch (Sql2oException ex) {
             System.out.println(ex);
         }
