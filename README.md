@@ -53,12 +53,14 @@ _**OpenJDK Runtime Environment (build 10.0.2+13-Ubuntu-1ubuntu0.18.04.4)**_
 ###### (for users with an IDE such as IntelliJ)
 + Open the project using the IDE you have installed
 + Build and Run the project.
++ Open your browser or postman (preferred) in order to interact with the API
 
 ###### (for users without an IDE)
 + Navigate to the folder containing the project
 + Build the gradle by running: `gradle build`.
 + Compile the code by running: `gradle compileJava`
 + Navigate to the App class file located at build/classes/java/main and run: `java App`.
++ Open your browser or postman (preferred) in order to interact with the API
 
 ## License
 This projects has a MIT License [found here](LICENSE)
