@@ -6,18 +6,24 @@ public class News {
     private String title;
     private String description;
     private String type;
+    private int deptId;
+    private int userId;
     private int id;
 
-    public News(String title, String description) {
+    public News(String title, String description, int userId) {
         this.title = title;
         this.description = description;
+        this.userId = userId;
         this.type = "General";
+        this.deptId = 0;
     }
 
-    public News(String title, String description, String type) {
+    public News(String title, String description, String type, int userId, int deptId) {
         this.title = title;
         this.description = description;
         this.type = type;
+        this.userId = userId;
+        this.deptId = deptId;
     }
 
     @Override
@@ -25,14 +31,15 @@ public class News {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         News news = (News) o;
-        return Objects.equals(title, news.title) &&
+        return id == news.id &&
+                Objects.equals(title, news.title) &&
                 Objects.equals(description, news.description) &&
                 Objects.equals(type, news.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, type);
+        return Objects.hash(title, description, type, id);
     }
 
     public String getTitle() {
@@ -65,5 +72,21 @@ public class News {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(int deptId) {
+        this.deptId = deptId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

@@ -12,15 +12,15 @@ public class NewsTest {
     public DatabaseRule databaseRule = new DatabaseRule();
 
     private News simpleNews(){
-        return new News("Simple News","Nothing to report");
+        return new News("Simple News","Nothing to report",1);
     }
 
     private News altNews(){
-        return new News("New Album","Kanye drop new album","Entertainment");
+        return new News("New Album","Kanye drop new album","Entertainment",1,1);
     }
 
     @Test
-    public void intializeCorrectly(){
+    public void initializeCorrectly(){
         News news = altNews();
         assertTrue(news instanceof News);
     }

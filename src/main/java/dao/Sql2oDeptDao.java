@@ -88,16 +88,17 @@ public class Sql2oDeptDao implements DeptDao {
     }
 
     @Override
-    public List<News> allDepartmentNews() {
+    public List<News> allDepartmentNews(int deptId) {
         List<News> news = new ArrayList<>();
 
         String joinQuery = "SELECT newsid FROM departments_news WHERE deptid = :deptid";
         try (Connection con = DB.sql2o.open()) {
             List<Integer> newsIDs = con.createQuery(joinQuery)
+                    .addParameter("deptid",deptId)
                     .executeAndFetch(Integer.class);
 
             for(int nId:newsIDs){
-                String sql = "SELECT * FROM users WHERE id = :id";
+                String sql = "SELECT * FROM news WHERE id = :id";
                 news.add(con.createQuery(sql)
                         .addParameter("id",nId)
                         .executeAndFetchFirst(News.class));

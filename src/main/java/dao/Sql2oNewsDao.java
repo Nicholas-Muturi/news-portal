@@ -28,21 +28,18 @@ public class Sql2oNewsDao implements NewsDao {
     }
 
     @Override
-    public String crossCheckDepartments(String deptName) {
-        String sql = "SELECT name from departments;";
+    public void addNewsToDepartment(News news) {
+        String sql = "INSERT INTO departments_news (deptid,newsid,userid) VALUES (:deptid,:newsid,:userid)";
         try (Connection con = DB.sql2o.open()) {
-            List<String> allNames = con.createQuery(sql)
-                    .executeAndFetch(String.class);
-
-            for(String name:allNames){
-                if(deptName.equalsIgnoreCase(name)){
-                    deptName = name;
-                }
-            }
+            con.createQuery(sql)
+                    .addParameter("deptid",news.getDeptId())
+                    .addParameter("newsid",news.getId())
+                    .addParameter("userid",news.getUserId())
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
         }
-        return deptName;
     }
-
 
     @Override
     public News findById(int id) {
@@ -69,9 +66,9 @@ public class Sql2oNewsDao implements NewsDao {
         try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
-                    .executeAndFetchFirst(News.class);
+                    .executeUpdate();
         } catch (Sql2oException ex){
-            System.out.println(ex);
+            System.out.println("Delete by id error: "+ex);
         }
     }
 
@@ -83,5 +80,20 @@ public class Sql2oNewsDao implements NewsDao {
         } catch (Sql2oException ex) {
             System.out.println(ex);
         }
+    }
+
+    private String crossCheckDepartments(String deptName) {
+        String sql = "SELECT name from departments;";
+        try (Connection con = DB.sql2o.open()) {
+            List<String> allNames = con.createQuery(sql)
+                    .executeAndFetch(String.class);
+
+            for(String name:allNames){
+                if(deptName.equalsIgnoreCase(name)){
+                    deptName = name;
+                }
+            }
+        }
+        return deptName;
     }
 }
