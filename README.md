@@ -2,10 +2,7 @@
 ##### By Nicholas M
 
 ## Description
-~~blank~~
-
-##### Project Properties
-~~blank~~
+News Portal is a project where we practice using REST API for querying and retrieving information. As a user, you should be able to view all all departments present, news articles (general or department-specific) and create users within a department as well as view information regarding a particular department or user.
 
 ## Prerequisites
 1. PostgreSQL
@@ -14,16 +11,14 @@
 4. Git
 5. Some prior knowledge of Java
 6. Some prior knowledge of Spark framework
-7. (optional) Java IDE
+7. Postman
+8. (optional) Java IDE
 
 ## Built With
-1. HTML + Handlebars/Moustache
-2. Css
-3. Java
-4. Gradle
-5. Spark
-6. Junit for testing
-7. PostgreSQL database
+1. Java & Gradle
+2. Spark
+3. Junit for testing
+4. PostgreSQL database
 
 ## Setup Guide
 ##### PostgreSQL
@@ -38,7 +33,12 @@
 + Follow it up with this following command to connect to the newly created database`\c news_portal;`
 + Once connected, create the following tables by running these commands:  
 ```
-<Database table commands to be inserted here>
+CREATE TABLE users (id serial primary key, name varchar, position varchar, role varchar, department varchar);
+CREATE TABLE news (id serial primary key, title varchar, description varchar, type varchar);
+CREATE TABLE departments (id serial primary key, name varchar, description varchar, totalemployees int);
+CREATE TABLE departments_users (id serial primary key, deptid int, userid int);
+CREATE TABLE departments_news (id serial primary key, deptid int, newsid int, userid int);
+CREATE DATABASE news_portal_test WITH TEMPLATE news_portal;
 ```
 + The last command creates the test database that shall be used to run your tests on. insert `\q` to exit psql server.
 

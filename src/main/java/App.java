@@ -5,10 +5,6 @@ import models.*;
 import dao.Sql2oNewsDao;
 import dao.Sql2oDeptDao;
 import dao.Sql2oUserDao;
-import org.sql2o.Connection;
-import org.sql2o.Sql2o;
-
-import java.util.List;
 
 public class App {
     public static void main(String[] args) {
