@@ -40,9 +40,29 @@ public class App {
         });
 
         get("/department/:deptId/details","application/json",(request, response) -> {
-            int idToFind = Integer.parseInt(request.params("deptId"));
-            return gson.toJson(deptDao.findById(idToFind));
+            int deptId = Integer.parseInt(request.params("deptId"));
+            return gson.toJson(deptDao.findById(deptId));
+
         });
+
+        post("/department/:deptId/users/new","application/json",(request, response) -> {
+            int deptId = Integer.parseInt(request.params("deptId"));
+            Department department = deptDao.findById(deptId);
+
+            User employee = gson.fromJson(request.body(),User.class);
+            employee.setDepartment(department.getName());
+            userDao.add(employee);
+            deptDao.addUserToDept(department,employee);
+            return gson.toJson(employee);
+        });
+
+        get("/department/:deptId/users","application/json",(request, response) -> {
+            int deptId = Integer.parseInt(request.params("deptId"));
+            return gson.toJson(deptDao.allDepartmentEmployees(deptId));
+
+        });
+
+
 
 
         //FILTERS

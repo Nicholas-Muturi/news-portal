@@ -60,4 +60,12 @@ public class Department {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void incrementTotalEmployees(){
+        this.totalEmployees++;
+    }
+    public void decrementTotalEmployees(){
+        this.totalEmployees--;
+    }
+
 }
