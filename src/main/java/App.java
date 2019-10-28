@@ -76,7 +76,7 @@ public class App {
                 return gson.toJson(foundUser);
             }
             else {
-                throw new ApiException(404,"User not found");
+                return "{\"Error 404!\":\"User not found\"}";
             }
         });
 
@@ -84,8 +84,6 @@ public class App {
             int deptId = Integer.parseInt(request.params("deptId"));
             return gson.toJson(deptDao.allDepartmentNews(deptId));
         });
-
-
 
 
         /*-----------------END DEPARTMENT-------------------*/
@@ -99,6 +97,23 @@ public class App {
         get("/users/:userId/details","application/json",(request, response) -> {
             int userId = Integer.parseInt(request.params("userId"));
             return gson.toJson(userDao.findById(userId));
+        });
+
+        post("/users/:userId/news/new","application/json",(request, response) -> {
+            int userId = Integer.parseInt(request.params("userId"));
+            User foundUser = userDao.findById(userId);
+
+            if (foundUser != null) {
+                News news = gson.fromJson(request.body(),News.class);
+                news.setUserId(userId);
+                newsDao.add(news);
+                newsDao.addNewsToDepartment(news);
+                response.status(201);
+                return gson.toJson(news);
+            }
+            else {
+                return "{\"Error 404!\":\"User not found. News cannot be posted without an actual user as the author\"}";
+            }
         });
         /*-----------------END USERS-------------------*/
 

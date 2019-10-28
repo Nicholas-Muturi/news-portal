@@ -61,6 +61,15 @@ public class Sql2oNewsDao implements NewsDao {
     }
 
     @Override
+    public List<News> allGeneralNews() {
+        String sql = "SELECT * from news where type='General';";
+        try (Connection con = DB.sql2o.open()) {
+            return con.createQuery(sql)
+                    .executeAndFetch(News.class);
+        }
+    }
+
+    @Override
     public void deleteById(int id) {
         String sql = "DELETE from news WHERE id=:id;";
         try (Connection con = DB.sql2o.open()) {
@@ -88,9 +97,15 @@ public class Sql2oNewsDao implements NewsDao {
             List<String> allNames = con.createQuery(sql)
                     .executeAndFetch(String.class);
 
-            for(String name:allNames){
-                if(deptName.equalsIgnoreCase(name)){
-                    deptName = name;
+            if(deptName.equalsIgnoreCase("general")){
+                deptName = "General";
+            }
+            else {
+                for(String name:allNames){
+                    if(deptName.equalsIgnoreCase(name)){
+                        deptName = name;
+                        break;
+                    }
                 }
             }
         }

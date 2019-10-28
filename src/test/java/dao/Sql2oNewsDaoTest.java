@@ -16,19 +16,17 @@ public class Sql2oNewsDaoTest {
 
     @Rule
     public DatabaseRule databaseRule = new DatabaseRule();
-
-    private News simpleNews(){
-        News news = new News("Simple News","Nothing to report",newUser().getId());
-        newsDao.add(news);
-        return news;
-    }
+    
     private News altNews(){
-        News news = new News("New Album","Kanye drop new album","Entertainment",newUser().getId(),newDept().getId());
+        News news = new News("New Album","Kanye drop new album");
+        news.setUserId(newUser().getId());
         newsDao.add(news);
         return news;
     }
     private News altNews2(){
-        News news = new News("New Album Yet Again","Kanye drop new album again","entertainment",newUser().getId(),newDept().getId());
+        News news = new News("New Album Yet Again","Kanye drop new album again");
+        news.setType("entertainment");
+        news.setUserId(newUser2().getId());
         newsDao.add(news);
         return news;
     }
@@ -53,13 +51,13 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void newsGetsSavedToDb(){
-        News news = simpleNews();
+        News news = altNews();
         assertNotEquals(0,news.getId());
     }
 
     @Test
     public void findNewsById(){
-        News news = simpleNews();
+        News news = altNews();
         News news2 = altNews2();
         assertTrue(news.equals(newsDao.findById(news.getId())));
     }
@@ -74,14 +72,14 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void findAllNewsPosts_int(){
-        News news = simpleNews();
+        News news = altNews();
         News news2 = altNews2();
         assertEquals(2,newsDao.allNews().size());
     }
 
     @Test
     public void simpleDeleteNewsById_true(){
-        News news = simpleNews();
+        News news = altNews();
         News news2 = altNews2();
         newsDao.deleteById(news.getId());
         assertEquals(1,newsDao.allNews().size());
@@ -89,7 +87,7 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void deleteAllNewsPosts(){
-        News news = simpleNews();
+        News news = altNews();
         News news2 = altNews2();
         newsDao.deleteAll();
         assertEquals(0,newsDao.allNews().size());
@@ -97,8 +95,7 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void addNewsToGeneralDepartment(){
-        User user = newUser();
-        News news = simpleNews();
+        News news = altNews();
         newsDao.addNewsToDepartment(news);
         assertEquals(1,deptDao.allDepartmentNews(0).size());
         assertEquals("General",deptDao.allDepartmentNews(0).get(0).getType());
@@ -106,7 +103,7 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void addNewsToSpecificDepartment(){
-        News news = altNews();
+        News news = altNews2();
         newsDao.addNewsToDepartment(news);
         assertEquals(1,deptDao.allDepartmentNews(news.getDeptId()).size());
     }

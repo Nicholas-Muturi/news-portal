@@ -12,11 +12,10 @@ public class NewsTest {
     public DatabaseRule databaseRule = new DatabaseRule();
 
     private News simpleNews(){
-        return new News("Simple News","Nothing to report",1);
+        return new News("Simple News","Nothing to report");
     }
-
     private News altNews(){
-        return new News("New Album","Kanye drop new album","Entertainment",1,1);
+        return new News("New Album","Kanye drop new album");
     }
 
     @Test
@@ -37,6 +36,7 @@ public class NewsTest {
     public void getDifferentNewsType(){
         News news = simpleNews();
         News news2 = altNews();
+        news2.setType("Entertainment");
         assertEquals(news.getType(),"General");
         assertEquals(news2.getType(),"Entertainment");
     }

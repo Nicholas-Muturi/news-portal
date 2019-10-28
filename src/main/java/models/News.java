@@ -10,20 +10,12 @@ public class News {
     private int userId;
     private int id;
 
-    public News(String title, String description, int userId) {
+    public News(String title, String description) {
         this.title = title;
         this.description = description;
-        this.userId = userId;
         this.type = "General";
+        this.userId = 0;
         this.deptId = 0;
-    }
-
-    public News(String title, String description, String type, int userId, int deptId) {
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.userId = userId;
-        this.deptId = deptId;
     }
 
     @Override

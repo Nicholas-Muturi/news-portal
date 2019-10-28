@@ -11,6 +11,7 @@ public interface NewsDao {
     //read
     News findById(int id);
     List<News> allNews();
+    List<News> allGeneralNews();
 
     //update
 
