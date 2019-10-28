@@ -20,6 +20,7 @@ public class Sql2oNewsDaoTest {
     private News altNews(){
         News news = new News("New Album","Kanye drop new album");
         news.setUserId(newUser().getId());
+        news.setDeptId(0);
         newsDao.add(news);
         return news;
     }
@@ -27,6 +28,7 @@ public class Sql2oNewsDaoTest {
         News news = new News("New Album Yet Again","Kanye drop new album again");
         news.setType("entertainment");
         news.setUserId(newUser2().getId());
+        news.setDeptId(1);
         newsDao.add(news);
         return news;
     }

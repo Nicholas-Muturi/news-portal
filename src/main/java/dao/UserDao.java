@@ -1,5 +1,6 @@
 package dao;
 
+import models.News;
 import models.User;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public interface UserDao {
     //read
     User findById(int id);
     List<User> allUsers();
+    List<News> myNews(int userId);
 
     //update
 

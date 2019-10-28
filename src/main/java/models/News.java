@@ -14,8 +14,6 @@ public class News {
         this.title = title;
         this.description = description;
         this.type = "General";
-        this.userId = 0;
-        this.deptId = 0;
     }
 
     @Override

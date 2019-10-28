@@ -42,12 +42,12 @@ public class App {
             return gson.toJson(department);
         });
 
-        get("/department/:deptId/details","application/json",(request, response) -> {
+        get("/departments/:deptId/details","application/json",(request, response) -> {
             int deptId = Integer.parseInt(request.params("deptId"));
             return gson.toJson(deptDao.findById(deptId));
         });
 
-        post("/department/:deptId/users/new","application/json",(request, response) -> {
+        post("/departments/:deptId/users/new","application/json",(request, response) -> {
             int deptId = Integer.parseInt(request.params("deptId"));
             Department department = deptDao.findById(deptId);
 
@@ -63,12 +63,12 @@ public class App {
             }
         });
 
-        get("/department/:deptId/users","application/json",(request, response) -> {
+        get("/departments/:deptId/users","application/json",(request, response) -> {
             int deptId = Integer.parseInt(request.params("deptId"));
             return gson.toJson(deptDao.allDepartmentEmployees(deptId));
         });
 
-        get("/department/:deptId/users/:userId/details","application/json",(request, response) -> {
+        get("/departments/:deptId/users/:userId/details","application/json",(request, response) -> {
             int userId = Integer.parseInt(request.params("userId"));
             User foundUser = userDao.findById(userId);
 
@@ -80,12 +80,43 @@ public class App {
             }
         });
 
-        get("/department/:deptId/news","application/json",(request, response) -> {
+        get("/departments/:deptId/users/:userId/news","application/json",(request, response) -> {
+            int userId = Integer.parseInt(request.params("userId"));
+            User foundUser = userDao.findById(userId);
+
+            if (foundUser != null) {
+                return gson.toJson(userDao.myNews(userId));
+            }
+            else {
+                return "{\"Error 404!\":\"User not found\"}";
+            }
+        });
+
+        post("/departments/:deptId/users/:userId/news/new","application/json",(request, response) -> {
+            int userId = Integer.parseInt(request.params("userId"));
+            int deptId = Integer.parseInt(request.params("deptId"));
+            User foundUser = userDao.findById(userId);
+            Department foundDept = deptDao.findById(deptId);
+
+            if (foundUser != null && foundDept != null) {
+                News news = gson.fromJson(request.body(),News.class);
+                news.setUserId(userId);
+                news.setDeptId(deptId);
+                news.setType(foundDept.getName());
+                newsDao.add(news);
+                newsDao.addNewsToDepartment(news);
+                response.status(201);
+                return gson.toJson(news);
+            }
+            else {
+                return "{\"Error 404!\":\"User or Department not found\"}";
+            }
+        });
+
+        get("/departments/:deptId/news","application/json",(request, response) -> {
             int deptId = Integer.parseInt(request.params("deptId"));
             return gson.toJson(deptDao.allDepartmentNews(deptId));
         });
-
-
         /*-----------------END DEPARTMENT-------------------*/
 
 
@@ -96,7 +127,18 @@ public class App {
 
         get("/users/:userId/details","application/json",(request, response) -> {
             int userId = Integer.parseInt(request.params("userId"));
-            return gson.toJson(userDao.findById(userId));
+            User foundUser = userDao.findById(userId);
+            if (foundUser != null) {
+                return gson.toJson(userDao.findById(userId));
+            }
+            else {
+                return "{\"Error 404!\":\"User not found.\"}";
+            }
+        });
+
+        get("/users/:userId/news","application/json",(request, response) -> {
+            int userId = Integer.parseInt(request.params("userId"));
+            return gson.toJson(userDao.myNews(userId));
         });
 
         post("/users/:userId/news/new","application/json",(request, response) -> {
@@ -105,7 +147,12 @@ public class App {
 
             if (foundUser != null) {
                 News news = gson.fromJson(request.body(),News.class);
+
+                if (!news.getType().equalsIgnoreCase("General")){
+                    return "{\"Error 400!\":\"News articles created in this manner have to be of a 'General' category\"}";
+                }
                 news.setUserId(userId);
+                news.setDeptId(0); //General Dept Id
                 newsDao.add(news);
                 newsDao.addNewsToDepartment(news);
                 response.status(201);
@@ -129,7 +176,7 @@ public class App {
         /*-----------------END NEWS-------------------*/
 
         //FILTERS
-        after((req, res) ->{
+        after((req, res) -> {
             res.type("application/json");
         });
     }
