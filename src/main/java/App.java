@@ -14,6 +14,7 @@ public class App {
         Sql2oUserDao userDao = new Sql2oUserDao();
         Sql2oNewsDao newsDao = new Sql2oNewsDao();
         Gson gson = new Gson();
+
         /*-----------HEROKU CONFIG------------*/
         ProcessBuilder process = new ProcessBuilder();
         int port;
@@ -26,6 +27,7 @@ public class App {
         port(port);
         /*------------------------------------*/
 
+
         get("/departments","application/json",(request, response) -> {
             return gson.toJson(deptDao.allDepartments());
         });
@@ -35,6 +37,11 @@ public class App {
             deptDao.add(department);
             response.status(201);
             return gson.toJson(department);
+        });
+
+        get("/department/:deptId/details","application/json",(request, response) -> {
+            int idToFind = Integer.parseInt(request.params("deptId"));
+            return gson.toJson(deptDao.findById(idToFind));
         });
 
 
