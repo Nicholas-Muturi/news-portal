@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("unused")
 public class Sql2oDeptDaoTest {
     private Sql2oDeptDao deptDao = new Sql2oDeptDao();
     private static Sql2oUserDao userDao = new Sql2oUserDao();
@@ -27,13 +28,13 @@ public class Sql2oDeptDaoTest {
     }
 
     private User newUser(){
-        User user = new User("Kanye West","Manager","Artist");
+        User user = new User("Kanye West","Manager","Artist","Media");
         userDao.add(user);
         return user;
     }
 
     private User newUser2(){
-        User user = new User("John Cena","Wrestler","Invisible");
+        User user = new User("John Cena","Wrestler","Invisible","Wrestler");
         userDao.add(user);
         return user;
     }

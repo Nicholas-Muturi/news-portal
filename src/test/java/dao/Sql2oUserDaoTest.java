@@ -16,12 +16,12 @@ public class Sql2oUserDaoTest {
     public DatabaseRule databaseRule = new DatabaseRule();
 
     private User newUser(){
-        User user = new User("Kanye West","Manager","Artist");
+        User user = new User("Kanye West","Manager","Artist","Media");
         userDao.add(user);
         return user;
     }
     private User newUser2(){
-        User user = new User("John Cena","Wrestler","Invisible");
+        User user = new User("John Cena","Wrestler","Invisible","Human Resource");
         userDao.add(user);
         return user;
     }
