@@ -8,6 +8,8 @@ import dao.Sql2oUserDao;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.util.List;
+
 public class App {
     public static void main(String[] args) {
         Sql2oDeptDao deptDao = new Sql2oDeptDao();
@@ -43,7 +45,6 @@ public class App {
         get("/department/:deptId/details","application/json",(request, response) -> {
             int deptId = Integer.parseInt(request.params("deptId"));
             return gson.toJson(deptDao.findById(deptId));
-
         });
 
         post("/department/:deptId/users/new","application/json",(request, response) -> {
@@ -60,14 +61,32 @@ public class App {
             } else {
                 throw new ApiException(404,"Department not found");
             }
-
         });
 
         get("/department/:deptId/users","application/json",(request, response) -> {
             int deptId = Integer.parseInt(request.params("deptId"));
             return gson.toJson(deptDao.allDepartmentEmployees(deptId));
-
         });
+
+        get("/department/:deptId/users/:userId/details","application/json",(request, response) -> {
+            int userId = Integer.parseInt(request.params("userId"));
+            User foundUser = userDao.findById(userId);
+
+            if (foundUser != null) {
+                return gson.toJson(foundUser);
+            }
+            else {
+                throw new ApiException(404,"User not found");
+            }
+        });
+
+        get("/department/:deptId/news","application/json",(request, response) -> {
+            int deptId = Integer.parseInt(request.params("deptId"));
+            return gson.toJson(deptDao.allDepartmentNews(deptId));
+        });
+
+
+
 
         /*-----------------END DEPARTMENT-------------------*/
 
@@ -76,12 +95,21 @@ public class App {
         get("/users","application/json",(request, response) -> {
             return gson.toJson(userDao.allUsers());
         });
+
+        get("/users/:userId/details","application/json",(request, response) -> {
+            int userId = Integer.parseInt(request.params("userId"));
+            return gson.toJson(userDao.findById(userId));
+        });
         /*-----------------END USERS-------------------*/
 
 
         /*-----------------NEWS-------------------*/
         get("/news","application/json",(request, response) -> {
-            return gson.toJson(userDao.allUsers());
+            return gson.toJson(newsDao.allNews());
+        });
+        get("/news/:newsId/details","application/json",(request, response) -> {
+            int newsId = Integer.parseInt(request.params("newsId"));
+            return gson.toJson(newsDao.findById(newsId));
         });
         /*-----------------END NEWS-------------------*/
 
