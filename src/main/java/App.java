@@ -28,6 +28,7 @@ public class App {
         /*------------------------------------*/
 
 
+        /*-----------------DEPARTMENT-------------------*/
         get("/departments","application/json",(request, response) -> {
             return gson.toJson(deptDao.allDepartments());
         });
@@ -67,6 +68,22 @@ public class App {
             return gson.toJson(deptDao.allDepartmentEmployees(deptId));
 
         });
+
+        /*-----------------END DEPARTMENT-------------------*/
+
+
+        /*-----------------USERS-------------------*/
+        get("/users","application/json",(request, response) -> {
+            return gson.toJson(userDao.allUsers());
+        });
+        /*-----------------END USERS-------------------*/
+
+
+        /*-----------------NEWS-------------------*/
+        get("/news","application/json",(request, response) -> {
+            return gson.toJson(userDao.allUsers());
+        });
+        /*-----------------END NEWS-------------------*/
 
         //FILTERS
         after((req, res) ->{
