@@ -162,7 +162,7 @@ public class App {
         get("/news/general","application/json",(request, response) -> {
             return gson.toJson(newsDao.allGeneralNews());
         });
-        get("/news/departmental","application/json",(request, response) -> {
+        get("/news/departments","application/json",(request, response) -> {
             return gson.toJson(newsDao.allDepartmentalNews());
         });
         get("/news/:newsId/details","application/json",(request, response) -> {
@@ -175,6 +175,9 @@ public class App {
             return "{\"Retrieve all departments\":\" /departments \"," +
                     "\"Retrieve all employees\":\" /users \"," +
                     "\"Retrieve all news articles\":\" /news \"," +
+                    "\"Retrieve all news articles that are classified as general\":\" /news/general \"," +
+                    "\"Retrieve all news articles that are belong to departments\":\" /news/departments \"," +
+                    "\"Get single news article details\":\" /news/[news-id]/details \"," +
                     "\"Get an individual user's details \":\" /users/[user-id]/details \"," +
                     "\"Get the details of a department\":\" /departments/[department-id]/details \"," +
                     "\"Get the news articles of a particular department\":\" /departments/[department-id]/news \"," +

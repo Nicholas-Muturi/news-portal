@@ -34,7 +34,7 @@ News Portal is a project where we practice using REST API for querying and retri
 + Once connected, create the following tables by running these commands:  
 ```
 CREATE TABLE users (id serial primary key, name varchar, position varchar, role varchar, department varchar);
-CREATE TABLE news (id serial primary key, title varchar, description varchar, type varchar);
+CREATE TABLE news (id serial primary key, title varchar, description varchar, type varchar, author varchar);
 CREATE TABLE departments (id serial primary key, name varchar, description varchar, totalemployees int);
 CREATE TABLE departments_users (id serial primary key, deptid int, userid int);
 CREATE TABLE departments_news (id serial primary key, deptid int, newsid int, userid int);
@@ -54,6 +54,7 @@ _**OpenJDK Runtime Environment (build 10.0.2+13-Ubuntu-1ubuntu0.18.04.4)**_
 + Open the project using the IDE you have installed
 + Build and Run the project.
 + Open your browser or postman (preferred) in order to interact with the API
++ Use the path `/sitemap` in the url when running the project to get a list of all paths in a summarized form
 
 ###### (for users without an IDE)
 + Navigate to the folder containing the project
@@ -61,6 +62,7 @@ _**OpenJDK Runtime Environment (build 10.0.2+13-Ubuntu-1ubuntu0.18.04.4)**_
 + Compile the code by running: `gradle compileJava`
 + Navigate to the App class file located at build/classes/java/main and run: `java App`.
 + Open your browser or postman (preferred) in order to interact with the API
++ Use the path `/sitemap` in the url when running the project to get a list of all paths in a summarized form
 
 ## License
 This projects has a MIT License [found here](LICENSE)
