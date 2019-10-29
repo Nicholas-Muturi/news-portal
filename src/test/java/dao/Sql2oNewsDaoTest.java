@@ -19,12 +19,14 @@ public class Sql2oNewsDaoTest {
     
     private News altNews(){
         News news = new News("New Album","Kanye drop new album");
+        news.setAuthor(newUser().getName());
         newsDao.add(news);
         return news;
     }
     private News altNews2(){
         News news = new News("New Album Yet Again","Kanye drop new album again");
         news.setType("entertainment");
+        news.setAuthor(newUser2().getName());
         newsDao.add(news);
         return news;
     }

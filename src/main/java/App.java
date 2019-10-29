@@ -97,6 +97,7 @@ public class App {
             if (foundUser != null && foundDept != null) {
                 News news = gson.fromJson(request.body(),News.class);
                 news.setType(foundDept.getName());
+                news.setAuthor(foundUser.getName());
                 newsDao.add(news);
                 newsDao.addNewsToDepartment(deptId,news.getId(),userId);
                 response.status(201);
@@ -141,10 +142,7 @@ public class App {
 
             if (foundUser != null) {
                 News news = gson.fromJson(request.body(),News.class);
-
-                if (!news.getType().equalsIgnoreCase("General")){
-                    return "{\"Error 400!\":\"News articles created in this manner have to be of a 'General' category\"}";
-                }
+                news.setAuthor(foundUser.getName());
                 newsDao.add(news);
                 newsDao.addNewsToDepartment(0,news.getId(),userId);
                 response.status(201);
@@ -161,11 +159,32 @@ public class App {
         get("/news","application/json",(request, response) -> {
             return gson.toJson(newsDao.allNews());
         });
+        get("/news/general","application/json",(request, response) -> {
+            return gson.toJson(newsDao.allGeneralNews());
+        });
+        get("/news/departmental","application/json",(request, response) -> {
+            return gson.toJson(newsDao.allDepartmentalNews());
+        });
         get("/news/:newsId/details","application/json",(request, response) -> {
             int newsId = Integer.parseInt(request.params("newsId"));
             return gson.toJson(newsDao.findById(newsId));
         });
         /*-----------------END NEWS-------------------*/
+
+        get("/sitemap","application/json",(request, response) -> {
+            return "{\"Retrieve all departments\":\" /departments \"," +
+                    "\"Retrieve all employees\":\" /users \"," +
+                    "\"Retrieve all news articles\":\" /news \"," +
+                    "\"Get an individual user's details \":\" /users/[user-id]/details \"," +
+                    "\"Get the details of a department\":\" /departments/[department-id]/details \"," +
+                    "\"Get the news articles of a particular department\":\" /departments/[department-id]/news \"," +
+                    "\"Get the news articles submitted by a particular user\":\" /users/[user-id]/news \"," +
+                    "\"Post a general news article\":\" /users/[user-id]/news/new \"," +
+                    "\"Post a news article in a particular department\":\" /departments/[department-id]/users/[user-id]/news/new \"," +
+                    "\"Create a new department\":\" /departments/new \"," +
+                    "\"Create a new user\":\" /users/new \"," +
+                    "}";
+        });
 
         //FILTERS
         after((req, res) -> {

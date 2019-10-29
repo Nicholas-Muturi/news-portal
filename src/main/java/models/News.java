@@ -6,6 +6,7 @@ public class News {
     private String title;
     private String description;
     private String type;
+    private String author;
     private int id;
 
     public News(String title, String description) {
@@ -28,6 +29,14 @@ public class News {
     @Override
     public int hashCode() {
         return Objects.hash(title, description, type, id);
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getTitle() {

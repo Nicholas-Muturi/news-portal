@@ -12,6 +12,7 @@ public interface NewsDao {
     News findById(int id);
     List<News> allNews();
     List<News> allGeneralNews();
+    List<News> allDepartmentalNews();
 
     //update
 

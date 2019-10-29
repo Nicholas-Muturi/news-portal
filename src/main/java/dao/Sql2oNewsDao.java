@@ -13,12 +13,13 @@ public class Sql2oNewsDao implements NewsDao {
     public void add(News news) {
         String checkedType = crossCheckDepartments(news.getType());
 
-        String sql = "INSERT INTO news (title,description,type) VALUES (:title,:description,:type)";
+        String sql = "INSERT INTO news (title,description,type,author) VALUES (:title,:description,:type,:author)";
         try (Connection con = DB.sql2o.open()) {
             int id = (int) con.createQuery(sql,true)
                     .addParameter("title",news.getTitle())
                     .addParameter("description",news.getDescription())
                     .addParameter("type",checkedType)
+                    .addParameter("author",news.getAuthor())
                     .executeUpdate()
                     .getKey();
             news.setId(id);
@@ -63,6 +64,15 @@ public class Sql2oNewsDao implements NewsDao {
     @Override
     public List<News> allGeneralNews() {
         String sql = "SELECT * from news where type='General';";
+        try (Connection con = DB.sql2o.open()) {
+            return con.createQuery(sql)
+                    .executeAndFetch(News.class);
+        }
+    }
+
+    @Override
+    public List<News> allDepartmentalNews() {
+        String sql = "SELECT * from news where type!='General';";
         try (Connection con = DB.sql2o.open()) {
             return con.createQuery(sql)
                     .executeAndFetch(News.class);

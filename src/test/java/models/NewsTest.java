@@ -37,8 +37,10 @@ public class NewsTest {
         News news = simpleNews();
         News news2 = altNews();
         news2.setType("Entertainment");
+        news2.setAuthor("Kanye");
         assertEquals(news.getType(),"General");
         assertEquals(news2.getType(),"Entertainment");
+        assertEquals(news2.getAuthor(),"Kanye");
     }
 
 }
