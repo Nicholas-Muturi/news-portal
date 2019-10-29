@@ -6,8 +6,6 @@ public class News {
     private String title;
     private String description;
     private String type;
-    private int deptId;
-    private int userId;
     private int id;
 
     public News(String title, String description) {
@@ -62,21 +60,5 @@ public class News {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(int deptId) {
-        this.deptId = deptId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 }

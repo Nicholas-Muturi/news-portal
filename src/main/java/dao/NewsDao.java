@@ -6,7 +6,7 @@ import java.util.List;
 public interface NewsDao {
     //create
     void add(News news);
-    void addNewsToDepartment(News news);
+    void addNewsToDepartment(int deptid, int newsid, int userid);
 
     //read
     News findById(int id);

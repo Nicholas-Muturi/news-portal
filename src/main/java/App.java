@@ -96,11 +96,9 @@ public class App {
 
             if (foundUser != null && foundDept != null) {
                 News news = gson.fromJson(request.body(),News.class);
-                news.setUserId(userId);
-                news.setDeptId(deptId);
                 news.setType(foundDept.getName());
                 newsDao.add(news);
-                newsDao.addNewsToDepartment(news);
+                newsDao.addNewsToDepartment(deptId,news.getId(),userId);
                 response.status(201);
                 return gson.toJson(news);
             }
@@ -147,10 +145,8 @@ public class App {
                 if (!news.getType().equalsIgnoreCase("General")){
                     return "{\"Error 400!\":\"News articles created in this manner have to be of a 'General' category\"}";
                 }
-                news.setUserId(userId);
-                news.setDeptId(0); //General Dept Id
                 newsDao.add(news);
-                newsDao.addNewsToDepartment(news);
+                newsDao.addNewsToDepartment(0,news.getId(),userId);
                 response.status(201);
                 return gson.toJson(news);
             }

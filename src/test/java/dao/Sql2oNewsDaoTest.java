@@ -19,16 +19,12 @@ public class Sql2oNewsDaoTest {
     
     private News altNews(){
         News news = new News("New Album","Kanye drop new album");
-        news.setUserId(newUser().getId());
-        news.setDeptId(0);
         newsDao.add(news);
         return news;
     }
     private News altNews2(){
         News news = new News("New Album Yet Again","Kanye drop new album again");
         news.setType("entertainment");
-        news.setUserId(newUser2().getId());
-        news.setDeptId(1);
         newsDao.add(news);
         return news;
     }
@@ -97,17 +93,20 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void addNewsToGeneralDepartment(){
+        User user = newUser();
         News news = altNews();
-        newsDao.addNewsToDepartment(news);
+        newsDao.addNewsToDepartment(0,news.getId(),user.getId());
         assertEquals(1,deptDao.allDepartmentNews(0).size());
         assertEquals("General",deptDao.allDepartmentNews(0).get(0).getType());
     }
 
     @Test
     public void addNewsToSpecificDepartment(){
+        Department department = newDept();
+        User user = newUser();
         News news = altNews2();
-        newsDao.addNewsToDepartment(news);
-        assertEquals(1,deptDao.allDepartmentNews(news.getDeptId()).size());
+        newsDao.addNewsToDepartment(department.getId(),news.getId(),user.getId());
+        assertEquals(1,deptDao.allDepartmentNews(department.getId()).size());
     }
 
 }
