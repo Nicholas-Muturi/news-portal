@@ -27,9 +27,7 @@ public class App {
 
 
         /*-----------------DEPARTMENT-------------------*/
-        get("/departments","application/json",(request, response) -> {
-            return gson.toJson(deptDao.allDepartments());
-        });
+        get("/departments","application/json",(request, response) -> gson.toJson(deptDao.allDepartments()));
 
         post("/departments/new","application/json",(request, response) -> {
             Department department = gson.fromJson(request.body(),Department.class);
@@ -116,9 +114,7 @@ public class App {
 
 
         /*-----------------USERS-------------------*/
-        get("/users","application/json",(request, response) -> {
-            return gson.toJson(userDao.allUsers());
-        });
+        get("/users","application/json",(request, response) -> gson.toJson(userDao.allUsers()));
 
         get("/users/:userId/details","application/json",(request, response) -> {
             int userId = Integer.parseInt(request.params("userId"));
@@ -156,42 +152,32 @@ public class App {
 
 
         /*-----------------NEWS-------------------*/
-        get("/news","application/json",(request, response) -> {
-            return gson.toJson(newsDao.allNews());
-        });
-        get("/news/general","application/json",(request, response) -> {
-            return gson.toJson(newsDao.allGeneralNews());
-        });
-        get("/news/departments","application/json",(request, response) -> {
-            return gson.toJson(newsDao.allDepartmentalNews());
-        });
+        get("/news","application/json",(request, response) -> gson.toJson(newsDao.allNews()));
+        get("/news/general","application/json",(request, response) -> gson.toJson(newsDao.allGeneralNews()));
+        get("/news/departments","application/json",(request, response) -> gson.toJson(newsDao.allDepartmentalNews()));
         get("/news/:newsId/details","application/json",(request, response) -> {
             int newsId = Integer.parseInt(request.params("newsId"));
             return gson.toJson(newsDao.findById(newsId));
         });
         /*-----------------END NEWS-------------------*/
 
-        get("/sitemap","application/json",(request, response) -> {
-            return "{\"Retrieve all departments\":\" /departments \"," +
-                    "\"Retrieve all employees\":\" /users \"," +
-                    "\"Retrieve all news articles\":\" /news \"," +
-                    "\"Retrieve all news articles that are classified as general\":\" /news/general \"," +
-                    "\"Retrieve all news articles that are belong to departments\":\" /news/departments \"," +
-                    "\"Get single news article details\":\" /news/[news-id]/details \"," +
-                    "\"Get an individual user's details \":\" /users/[user-id]/details \"," +
-                    "\"Get the details of a department\":\" /departments/[department-id]/details \"," +
-                    "\"Get the news articles of a particular department\":\" /departments/[department-id]/news \"," +
-                    "\"Get the news articles submitted by a particular user\":\" /users/[user-id]/news \"," +
-                    "\"Post a general news article\":\" /users/[user-id]/news/new \"," +
-                    "\"Post a news article in a particular department\":\" /departments/[department-id]/users/[user-id]/news/new \"," +
-                    "\"Create a new department\":\" /departments/new \"," +
-                    "\"Create a new user\":\" /users/new \"," +
-                    "}";
-        });
+        get("/sitemap","application/json",(request, response) -> "{\"Retrieve all departments\":\" /departments \"," +
+                "\"Retrieve all employees\":\" /users \"," +
+                "\"Retrieve all news articles\":\" /news \"," +
+                "\"Retrieve all news articles that are classified as general\":\" /news/general \"," +
+                "\"Retrieve all news articles that are belong to departments\":\" /news/departments \"," +
+                "\"Get single news article details\":\" /news/[news-id]/details \"," +
+                "\"Get an individual user's details \":\" /users/[user-id]/details \"," +
+                "\"Get the details of a department\":\" /departments/[department-id]/details \"," +
+                "\"Get the news articles of a particular department\":\" /departments/[department-id]/news \"," +
+                "\"Get the news articles submitted by a particular user\":\" /users/[user-id]/news \"," +
+                "\"Post a general news article\":\" /users/[user-id]/news/new \"," +
+                "\"Post a news article in a particular department\":\" /departments/[department-id]/users/[user-id]/news/new \"," +
+                "\"Create a new department\":\" /departments/new \"," +
+                "\"Create a new user\":\" /users/new \"," +
+                "}");
 
         //FILTERS
-        after((req, res) -> {
-            res.type("application/json");
-        });
+        after((req, res) -> res.type("application/json"));
     }
 }
