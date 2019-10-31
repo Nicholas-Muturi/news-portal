@@ -1,6 +1,7 @@
 import static spark.Spark.*;
 
 import com.google.gson.Gson;
+import dao.SQL2oSitemapDao;
 import models.*;
 import dao.Sql2oNewsDao;
 import dao.Sql2oDeptDao;
@@ -11,6 +12,7 @@ public class App {
         Sql2oDeptDao deptDao = new Sql2oDeptDao();
         Sql2oUserDao userDao = new Sql2oUserDao();
         Sql2oNewsDao newsDao = new Sql2oNewsDao();
+        SQL2oSitemapDao sitemapDao = new SQL2oSitemapDao();
         Gson gson = new Gson();
 
         /*-----------HEROKU CONFIG------------*/
@@ -161,21 +163,9 @@ public class App {
         });
         /*-----------------END NEWS-------------------*/
 
-        get("/sitemap","application/json",(request, response) -> "{\"Retrieve all departments\":\" /departments \"," +
-                "\"Retrieve all employees\":\" /users \"," +
-                "\"Retrieve all news articles\":\" /news \"," +
-                "\"Retrieve all news articles that are classified as general\":\" /news/general \"," +
-                "\"Retrieve all news articles that are belong to departments\":\" /news/departments \"," +
-                "\"Get single news article details\":\" /news/[news-id]/details \"," +
-                "\"Get an individual user's details \":\" /users/[user-id]/details \"," +
-                "\"Get the details of a department\":\" /departments/[department-id]/details \"," +
-                "\"Get the news articles of a particular department\":\" /departments/[department-id]/news \"," +
-                "\"Get the news articles submitted by a particular user\":\" /users/[user-id]/news \"," +
-                "\"Post a general news article\":\" /users/[user-id]/news/new \"," +
-                "\"Post a news article in a particular department\":\" /departments/[department-id]/users/[user-id]/news/new \"," +
-                "\"Create a new department\":\" /departments/new \"," +
-                "\"Create a new user\":\" /users/new \"," +
-                "}");
+        get("/sitemap","application/json",(request, response) ->{
+            return gson.toJson(sitemapDao.allPaths());
+        });
 
         //FILTERS
         after((req, res) -> res.type("application/json"));
