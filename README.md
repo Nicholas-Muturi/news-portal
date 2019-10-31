@@ -65,7 +65,7 @@ _**OpenJDK Runtime Environment (build 10.0.2+13-Ubuntu-1ubuntu0.18.04.4)**_
 + Use the path `/sitemap` in the url when running the project to get a list of all paths in a summarized form
 
 ## Live Site
-[Visit API website](https://news-portal-0047.herokuapp.com/)
+[Visit API website](https://news-portal-0047.herokuapp.com/sitemap)
 
 ## License
 This projects has a MIT License [found here](LICENSE)
